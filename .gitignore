@@ -1,0 +1,23 @@
+BSequence test: stridein/
+Lib/
+ipch/
+debug/
+dist/
+release/
+node_modules/
+bower_components/
+
+*~
+*.DS_Store
+*.aps
+*.cache
+*.log
+*.opensdf
+*.orig
+*.recycle
+*.rej
+*.sdf
+*.suo
+*.swo
+*.swp
+*.user
