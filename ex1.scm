@@ -119,3 +119,62 @@
     (/ (+ (/ x (sqr guess)) (* 2 guess)) 3))
 
   (cube-root-iter 2.0 1.0 x))
+
+;; exercise 1.9
+(define (+ a b)
+  (if (= a 0)
+      b
+      (inc (+ (dec a) b))))
+;; substitution model illustration of (+ 4 5):
+;; (+ 4 5)
+;;   (inc (+ 3 5))
+;;   (inc (inc (+ 2 5)))
+;;   (inc (inc (inc (+ 1 5))))
+;;   (inc (inc (inc (inc (+ 0 5)))))
+;;   (inc (inc (inc (inc 5))))
+;;   (inc (inc (inc 6)))
+;;   (inc (inc 7))
+;;   (inc 8)
+;;   9
+;; => recursive process
+
+(define (+ a b)
+  (if (= a 0)
+      b
+      (+ (dec a) (inc b))))
+;; substitution model illustration of (+ 4 5):
+;; (+ 4 5)
+;;   (+ 3 6)
+;;   (+ 2 7)
+;;   (+ 1 8)
+;;   (+ 0 9)
+;;   9
+;; => iterative process
+
+;; exercise 1.10
+(define (A x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (else (A (- x 1)
+                 (A x (- y 1))))))
+
+(define (f n) (A 0 n)) ;; 2 * n
+
+(define (g n) (A 1 n)) ;; 2 ^ n
+
+;; 2 4 16 65536, ... = 2^1, 2^2, 2^4, 2^16, ... = 2, 2^2, 2^2^2, 2^2^2^2, ...
+(define (h n) (A 2 n))
+
+;; exercise 1.11
+(define (f n)
+  (if (< n 3)
+      n
+      (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+
+(define (g n)
+  (define (f-iter a b c count)
+    (if (= count 0)
+        a
+        (f-iter b c (+ c (* 2 b) (* 3 a)) (- count 1))))
+  (f-iter 0 1 2 n))
