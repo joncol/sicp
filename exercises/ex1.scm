@@ -415,3 +415,16 @@
 ;; using this expmod is much slower, probably since repeatedly calculating the
 ;; remainder of very large numbers divided by eachother is slower than when
 ;; having smaller numbers
+
+;; exercise 1.26
+;; The procedure with two calls to expmod will create a tree recursive process.
+;; Total time for this is O(2^(log n)) = O(n)
+
+;; exercise 1.27
+(define (carmichael-number? n)
+  (define (aux a)
+    (if (= a n)
+        #t
+        (and (= (expmod a n n) a) (aux (+ a 1))))
+    )
+  (aux 1))
