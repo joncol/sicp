@@ -263,3 +263,26 @@
             (fast-mult-iter-aux (halve x) (double y) a)
             (fast-mult-iter-aux (- x 1) y (+ a y)))))
   (fast-mult-iter-aux x y 0))
+
+;; exercise 1.19
+;; T(p, q): a <- bq + aq + ap
+;;          b <- bp + aq
+;; Apply T(p, q) twice. Yields transformation T(p', q') of same form.
+;; Derivation on paper yields: p' = p^2 + q^2 and q' = 2pq + q^2.
+;; O(log n) time and O(1) space. Cool!
+(define (fib n)
+  (fib-iter 1 0 0 1 n))
+
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+        ((even? count)
+         (fib-iter a
+                   b
+                   (+ (sqr p) (sqr q))
+                   (+ (* 2 p q) (sqr q))
+                   (/ count 2)))
+        (else (fib-iter (+ (* b q) (* a q) (* a p))
+                        (+ (* b p) (* a q))
+                        p
+                        q
+                        (- count 1)))))
