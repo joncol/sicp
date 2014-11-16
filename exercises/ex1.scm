@@ -229,3 +229,37 @@
 ;; exercise 1.15
 ;; 5 times ((1 / 3) ^ 5 * 12.15 = 0.05, (1 / 3) ^ 4 * 12.15 = 0.15)
 ;; O(log(a)) time and space
+
+;; exercise 1.16
+(define (fast-expt-iter b n)
+  (define (fast-expt-iter-aux b n a)
+    (if (= n 0)
+        a
+        (if (even? n)
+            (fast-expt-iter (sqr b) (/ n 2) a)
+            (fast-expt-iter b (- n 1) (* a b)))))
+  (fast-expt-iter-aux b n 1))
+
+;; exercise 1.17
+(define (double n)
+  (+ n n))
+
+(define (halve n)
+  (/ n 2))
+
+(define (fast-mult x y)
+  (if (= 1 x)
+      y
+      (if (even? x)
+          (fast-mult (halve x) (double y))
+          (+ y (fast-mult (- x 1) y)))))
+
+;; exercise 1.18
+(define (fast-mult-iter x y)
+  (define (fast-mult-iter-aux x y a)
+    (if (= x 1)
+        (+ a y)
+        (if (even? x)
+            (fast-mult-iter-aux (halve x) (double y) a)
+            (fast-mult-iter-aux (- x 1) y (+ a y)))))
+  (fast-mult-iter-aux x y 0))
