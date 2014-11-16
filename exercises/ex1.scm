@@ -231,13 +231,14 @@
 ;; O(log(a)) time and space
 
 ;; exercise 1.16
+;; calculates b^n in O(log n) time
 (define (fast-expt-iter b n)
   (define (fast-expt-iter-aux b n a)
     (if (= n 0)
         a
         (if (even? n)
-            (fast-expt-iter (square b) (/ n 2) a)
-            (fast-expt-iter b (- n 1) (* a b)))))
+            (fast-expt-iter-aux (square b) (/ n 2) a)
+            (fast-expt-iter-aux b (- n 1) (* a b)))))
   (fast-expt-iter-aux b n 1))
 
 ;; exercise 1.17
@@ -354,7 +355,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (fast-prime? n 1000)
+  (if (fast-prime? n 10)
       (report-prime (- (runtime) start-time))))
 
 (define (report-prime elapsed-time)
@@ -407,3 +408,10 @@
 
 ;; O(log n) means we have to (roughly) double the number of digits to double
 ;; the time. Observations support this.
+
+;; exercise 1.25
+(define (expmod base exp m)
+  (remainder (fast-expt-iter base exp) m))
+;; using this expmod is much slower, probably since repeatedly calculating the
+;; remainder of very large numbers divided by eachother is slower than when
+;; having smaller numbers
