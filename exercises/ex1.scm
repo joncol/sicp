@@ -116,7 +116,7 @@
                         x)))
 
   (define (improve guess x)
-    (/ (+ (/ x (sqr guess)) (* 2 guess)) 3))
+    (/ (+ (/ x (square guess)) (* 2 guess)) 3))
 
   (cube-root-iter 2.0 1.0 x))
 
@@ -236,7 +236,7 @@
     (if (= n 0)
         a
         (if (even? n)
-            (fast-expt-iter (sqr b) (/ n 2) a)
+            (fast-expt-iter (square b) (/ n 2) a)
             (fast-expt-iter b (- n 1) (* a b)))))
   (fast-expt-iter-aux b n 1))
 
@@ -278,8 +278,8 @@
         ((even? count)
          (fib-iter a
                    b
-                   (+ (sqr p) (sqr q))
-                   (+ (* 2 p q) (sqr q))
+                   (+ (square p) (square q))
+                   (+ (* 2 p q) (square q))
                    (/ count 2)))
         (else (fib-iter (+ (* b q) (* a q) (* a p))
                         (+ (* b p) (* a q))
@@ -354,7 +354,7 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (prime? n)
+  (if (fast-prime? n 1000)
       (report-prime (- (runtime) start-time))))
 
 (define (report-prime elapsed-time)
@@ -384,3 +384,26 @@
 ;; addition operator compared to function call to next, with contains branching.
 ;; I.e. the condition checking in next takes considerable time in comparison to
 ;; the primality test.
+
+;; exercise 1.24
+(define (expmod base exp m)
+  (cond ((= exp 0) 1)
+        ((even? exp)
+         (remainder (square (expmod base (/ exp 2) m))
+                    m))
+        (else
+         (remainder (* base (expmod base (- exp 1) m))
+                    m))))
+
+(define (fermat-test n)
+  (define (try-it a)
+    (= (expmod a n n) a))
+  (try-it (+ 1 (random (- n 1)))))
+
+(define (fast-prime? n times)
+  (cond ((= times 0) true)
+        ((fermat-test n) (fast-prime? n (- times 1)))
+        (else false)))
+
+;; O(log n) means we have to (roughly) double the number of digits to double
+;; the time. Observations support this.
