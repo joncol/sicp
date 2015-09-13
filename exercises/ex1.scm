@@ -1,29 +1,31 @@
 ;; exercise 1.1
 
-10
-(+ 5 3 4)
-(- 9 1)
-(/ 6 2)
-(+ (* 2 4) (- 4 6))
-(define a 3)
-(define b (+ a 1))
-(+ a b (* a b))
-(= a b)
+#lang planet neil/sicp
 
-(if (and (> b a) (< b (* a b)))
-    b
-    a)
+;; 10
+;; (+ 5 3 4)
+;; (- 9 1)
+;; (/ 6 2)
+;; (+ (* 2 4) (- 4 6))
+;; (define a 3)
+;; (define b (+ a 1))
+;; (+ a b (* a b))
+;; (= a b)
 
-(cond ((= a 4) 6)
-      ((= b 4) (+ 6 7 a))
-      (else 25))
+;; (if (and (> b a) (< b (* a b)))
+;;     b
+;;     a)
 
-(+ 2 (if (> b a) b a))
+;; (cond ((= a 4) 6)
+;;       ((= b 4) (+ 6 7 a))
+;;       (else 25))
 
-(* (cond ((> a b) a)
-         ((< a b) b)
-         (else -1))
-   (+ a 1))
+;; (+ 2 (if (> b a) b a))
+
+;; (* (cond ((> a b) a)
+;;          ((< a b) b)
+;;          (else -1))
+;;    (+ a 1))
 
 ;; exercise 1.2
 
@@ -34,6 +36,9 @@
 
 (define (sqr x)
   (* x x))
+
+(define (square x)
+  (sqr x))
 
 (define (sum-of-squares x y)
   (+ (sqr x) (sqr y)))
@@ -121,6 +126,12 @@
   (cube-root-iter 2.0 1.0 x))
 
 ;; exercise 1.9
+(define (dec x)
+  (- x 1))
+
+(define (inc x)
+  (+ x 1))
+
 (define (+ a b)
   (if (= a 0)
       b
@@ -355,8 +366,8 @@
   (start-prime-test n (runtime)))
 
 (define (start-prime-test n start-time)
-  (if (fast-prime? n 10)
-      (report-prime (- (runtime) start-time))))
+  (when (fast-prime? n 10)
+    (report-prime (- (runtime) start-time))))
 
 (define (report-prime elapsed-time)
   (display " *** ")
@@ -366,8 +377,8 @@
   ;; aux assumes a and b are odd
   (define (aux a b)
     (timed-prime-test a)
-    (if (<= a b)
-        (search-for-primes (+ a 2) b)))
+    (when (<= a b)
+      (search-for-primes (+ a 2) b)))
 
   (aux (if (odd? a) a (+ a 1))
        (if (odd? b) b (- b 3))))
