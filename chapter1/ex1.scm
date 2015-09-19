@@ -358,7 +358,9 @@
 
 ;; exercise 1.22
 (define (prime? n)
-  (= n (smallest-divisor n)))
+  (if (< n 2)
+      #f
+      (= n (smallest-divisor n))))
 
 (define (timed-prime-test n)
   (newline)
