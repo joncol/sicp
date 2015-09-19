@@ -1,10 +1,8 @@
-<h1>README</h1>
+# README
 
-This will be my attempt at doing some of the problems from the
+These are my solutions for problems from the
 [SICP](http://mitpress.mit.edu/books/structure-and-interpretation-computer-programs)
-book (for fun and great success).
+book.
 
-I'm using MIT Scheme and Emacs (with [Evil](https://gitorious.org/evil/pages/Home)
-mode) to do this.
-
-Let's see how it goes.
+I'm using Racket and Emacs (with [Evil](https://gitorious.org/evil/pages/Home)
+mode) with `run-geiser`.
