@@ -12,3 +12,9 @@
 
 (define (log2 x)
   (/ (log x) (log 2)))
+
+(define (average a b)
+  (/ (+ a b) 2))
+
+(define (average-damp f)
+  (lambda (x) (average x (f x))))
