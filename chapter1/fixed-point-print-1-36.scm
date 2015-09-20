@@ -1,3 +1,5 @@
+(load "fixed-point.scm")
+
 (define tolerance 0.001)
 
 (define (fixed-point-print f first-guess)
@@ -26,9 +28,6 @@
 (define answer
   (fixed-point-print fun 2.0))
 
-(define (avg-damp f)
-  (lambda (x) (/ (+ x (f x)) 2)))
-
 ;;; 7 steps with damping vs. 23 without damping
 (define answer-avg-damp
-  (fixed-point-print (avg-damp fun) 2.0))
+  (fixed-point-print (average-damp fun) 2.0))

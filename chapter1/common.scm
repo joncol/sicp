@@ -9,3 +9,6 @@
 
 (define (identity x)
   x)
+
+(define (log2 x)
+  (/ (log x) (log 2)))

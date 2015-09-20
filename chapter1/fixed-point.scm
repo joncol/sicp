@@ -9,3 +9,9 @@
           next
           (try next))))
   (try first-guess))
+
+(define (fixed-point-of-transform g transform guess)
+  (fixed-point (transform g) guess))
+
+(define (average-damp f)
+  (lambda (x) (/ (+ x (f x)) 2.0)))
