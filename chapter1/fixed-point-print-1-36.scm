@@ -1,5 +1,3 @@
-#lang planet neil/sicp
-
 (define tolerance 0.001)
 
 (define (fixed-point-print f first-guess)

@@ -1,5 +1,3 @@
-#lang planet neil/sicp
-
 ;;; exercise 1.30
 
 (define (sum-iter term a next b)

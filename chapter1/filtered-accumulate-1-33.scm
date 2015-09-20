@@ -1,16 +1,4 @@
-#lang planet neil/sicp
-
-(define (identity x)
-  x)
-
-(define (inc x)
-  (+ x 1))
-
-(define (dec x)
-  (- x 1))
-
-(define (square x)
-  (* x x))
+(load "common.scm")
 
 (define (smallest-divisor n)
   (find-divisor n 2))
@@ -32,7 +20,7 @@
       #f
       (= n (smallest-divisor n))))
 
-;;; exercise 1.32
+;;; exercise 1.33
 ;;; recursive process (right fold)
 (define (filtered-accumulate combiner null-value term a next b pred)
   (if (> a b)

@@ -1,5 +1,3 @@
-#lang planet neil/sicp
-
 (define (identity x)
   x)
 

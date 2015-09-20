@@ -1,5 +1,3 @@
-#lang planet neil/sicp
-
 (define (cube x)
   (* x x x))
 
