@@ -26,3 +26,9 @@
 (define (sub-interval x y)
   (make-interval (- (lower-bound x) (upper-bound y))
                  (- (upper-bound x) (lower-bound y))))
+
+;;; exercise 2.10
+(define (div-interval2 x y)
+  (if (> (* (lower-bound y) (upper-bound y)) 0)
+      (div-interval x y)
+      (error "Interval y spans 0.")))
