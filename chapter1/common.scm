@@ -13,6 +13,9 @@
 (define (log2 x)
   (/ (log x) (log 2)))
 
+(define (logn x n)
+  (/ (log x) (log n)))
+
 (define (average a b)
   (/ (+ a b) 2))
 
