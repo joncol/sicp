@@ -32,3 +32,40 @@
   (if (> (* (lower-bound y) (upper-bound y)) 0)
       (div-interval x y)
       (error "Interval y spans 0.")))
+
+;;; exercise 2.11
+;; (define (mul-interval2 x y)
+;;   (let ((x-lo (lower-bound x))
+;;         (x-hi (upper-bound x))
+;;         (y-lo (lower-bound y))
+;;         (y-hi (upper-bound y)))
+;;     (let ((x-sign (interval-sign x))
+;;           (y-sign (interval-sign y)))
+;;       (cond ((and (< x-sign 0) (< y-sign 0))
+;;              (make-interval 0 0))
+;;             ((and (> x-sign 0) (> y-sign 0))
+;;              (make-interval (* x-lo y-lo) (* x-hi y-hi)))
+;;             ))))
+
+;; (define (interval-sign x)
+;;   (cond ((and (>= lo 0) (>= hi 0)) 1)
+;;         ((and (< lo 0) (< hi 0)) -1)
+;;         (else 0)))
+
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2))
+
+(define (width i)
+  (/ (- (upper-bound i) (lower-bound i)) 2))
+
+;;; exercise 2.12
+
+(define (make-center-percent c p)
+  (let ((w (/ (* c p) 100.0)))
+    (make-center-width c w)))
+
+(define (percent i)
+  (* (/ (width i) (center i)) 100.0))
