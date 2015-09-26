@@ -76,10 +76,22 @@
   (/ (- (upper-bound i) (lower-bound i)) 2))
 
 ;;; exercise 2.12
-
 (define (make-center-percent c p)
   (let ((w (/ (* c p) 100.0)))
     (make-center-width c w)))
 
 (define (percent i)
   (* (/ (width i) (center i)) 100.0))
+
+;;; exercise 2.14
+(define (par1 r1 r2)
+  (div-interval (mul-interval r1 r2)
+                (add-interval r1 r2)))
+
+(define (par2 r1 r2)
+  (let ((one (make-interval 1 1)))
+    (div-interval one
+                  (add-interval (div-interval one r1)
+                                (div-interval one r2)))))
+
+;;; no concept of identity: A / A is not 1
