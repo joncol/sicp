@@ -40,18 +40,31 @@
           ((and (< lo 0) (< hi 0)) -1)
           (else 0)))
   (let ((x-lo (lower-bound x))
-        (x-hi (upper-bound x))
+        (x-up (upper-bound x))
         (y-lo (lower-bound y))
-        (y-hi (upper-bound y)))
+        (y-up (upper-bound y)))
     (let ((x-sign (interval-sign x))
           (y-sign (interval-sign y)))
       (cond ((> x-sign 0)
              (cond ((> y-sign 0)
-                    (make-interval (* x-lo y-lo) (* x-hi y-hi))))
-             (cond ((< y-sign 0)
-                    (make-interval (* x-hi y-lo) (* x-lo y-hi))))
-             (else (make-interval (* x-hi y-lo) (* x-lo y-hi))))
-            ))))
+                    (make-interval (* x-lo y-lo) (* x-up y-up)))
+                   ((< y-sign 0)
+                    (make-interval (* x-up y-lo) (* x-lo y-up)))
+                   (else (make-interval (* x-up y-lo) (* x-up y-up)))))
+            ((< x-sign 0)
+             (cond ((> y-sign 0)
+                    (make-interval (* x-lo y-up) (* x-up y-lo)))
+                   ((< y-sign 0)
+                    (make-interval (* x-up y-up) (* x-lo y-lo)))
+                   (else (make-interval (* x-lo y-up) (* x-lo y-lo)))))
+            (else
+             (cond ((> y-sign 0)
+                    (make-interval (* x-lo y-up) (* x-up y-up)))
+                   ((< y-sign 0)
+                    (make-interval (* x-up y-lo) (* x-lo y-lo)))
+                   (else
+                    (make-interval (min (* x-lo y-up) (* x-up y-lo))
+                                   (max (* x-lo y-lo) (* x-up y-up))))))))))
 
 (define (make-center-width c w)
   (make-interval (- c w) (+ c w)))
@@ -63,10 +76,22 @@
   (/ (- (upper-bound i) (lower-bound i)) 2))
 
 ;;; exercise 2.12
-
 (define (make-center-percent c p)
   (let ((w (/ (* c p) 100.0)))
     (make-center-width c w)))
 
 (define (percent i)
   (* (/ (width i) (center i)) 100.0))
+
+;;; exercise 2.14
+(define (par1 r1 r2)
+  (div-interval (mul-interval r1 r2)
+                (add-interval r1 r2)))
+
+(define (par2 r1 r2)
+  (let ((one (make-interval 1 1)))
+    (div-interval one
+                  (add-interval (div-interval one r1)
+                                (div-interval one r2)))))
+
+;;; no concept of identity: A / A is not 1
