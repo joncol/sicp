@@ -21,4 +21,5 @@
 
 (fold-left list nil (list 1 2 3))  ;; => (((nil 1) 2) 3)
 
-;;; fold-left is equal to fold-right if the operation is symmetric
+;;; fold-left is equal to fold-right if the operation is commutative and
+;;; associative
