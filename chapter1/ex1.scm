@@ -281,59 +281,8 @@
                         q
                         (- count 1)))))
 
-;; exercise 1.21
-(define (smallest-divisor n)
-  (find-divisor n 2))
-
-(define (find-divisor n test-divisor)
-  (cond ((> (square test-divisor) n) n)
-        ((divides? test-divisor n) test-divisor)
-        (else (find-divisor n (next test-divisor)))))
-
-(define (divides? a b)
-  (= (remainder b a) 0))
-
-(smallest-divisor 199)   ; 199
-(smallest-divisor 1999)  ; 1999
-(smallest-divisor 19999) ; 7
-
-;; exercise 1.22
-(define (prime? n)
-  (if (< n 2)
-      #f
-      (= n (smallest-divisor n))))
-
-(define (timed-prime-test n)
-  (newline)
-  (display n)
-  (start-prime-test n (runtime)))
-
-(define (start-prime-test n start-time)
-  (when (fast-prime? n 10)
-    (report-prime (- (runtime) start-time))))
-
-(define (report-prime elapsed-time)
-  (display " *** ")
-  (display elapsed-time))
-
-(define (search-for-primes a b)
-  ;; aux assumes a and b are odd
-  (define (aux a b)
-    (timed-prime-test a)
-    (when (<= a b)
-      (search-for-primes (+ a 2) b)))
-
-  (aux (if (odd? a) a (+ a 1))
-       (if (odd? b) b (- b 3))))
-
 ;; at values of around 100000000000, it starts to be apparent that the running
 ;; time of the algorithm indeed is O(n^0.5)
-
-;; exercise 1.23
-(define (next n)
-  (if (= n 2)
-      3
-      (+ n 2)))
 
 ;; The speedup ratio is about 1.65. Probably because of highly optimized
 ;; addition operator compared to function call to next, with contains branching.
