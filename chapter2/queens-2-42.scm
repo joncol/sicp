@@ -9,12 +9,17 @@
     (if (= k 0)
         (list empty-board)
         (filter
-         (lambda (positions) (safe? k positions))
+         (lambda (positions) (safe? positions))
          (flatmap
-          (lambda (rest-of-queens) ;; roq = a list position pairs
+          (lambda (rest-of-queens) ;; roq = a list of position pairs
             (newline)
             (display "## rest-of-queens: ")
             (display rest-of-queens)
+            (newline)
+            (display "  inner map: ")
+            (display (map (lambda (new-row)
+                            (adjoin-position new-row k rest-of-queens))
+                          (enumerate-interval 1 board-size)))
             (newline)
             (map (lambda (new-row)
                    (adjoin-position new-row k rest-of-queens))
@@ -28,12 +33,12 @@
 ;;; Check the first (row col) in the list against previous
 ;;; (row col)-pairs for conflicts.
 ;;; TODO: refactor using hof?
-(define (safe? col positions)
+(define (safe? positions)
   (newline)
   (display "-> safe")
   (display "  positions: ")
   (display positions)
-  (newline)
+  (display ": ")
 
   (define (conflicts-with? new-pos)
     (lambda (pos)
@@ -49,6 +54,8 @@
 
   (let ((new-p (car positions))
         (old-ps (cdr positions)))
+    (display (not (any? (conflicts-with? new-p) old-ps)))
+    (newline)
     (not (any? (conflicts-with? new-p) old-ps))))
 
 (define (any? predicate sequence)
@@ -64,11 +71,4 @@
   (cadr pos))
 
 (define (adjoin-position row col positions)
-  (newline)
-  (display "    positions before: ")
-  (display positions)
-  (newline)
-  (display "    positions after: ")
-  (display (cons (make-pos row col) positions))
-  (newline)
   (cons (make-pos row col) positions))
