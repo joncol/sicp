@@ -12,15 +12,6 @@
          (lambda (positions) (safe? positions))
          (flatmap
           (lambda (rest-of-queens) ;; roq = a list of position pairs
-            (newline)
-            (display "## rest-of-queens: ")
-            (display rest-of-queens)
-            (newline)
-            (display "  inner map: ")
-            (display (map (lambda (new-row)
-                            (adjoin-position new-row k rest-of-queens))
-                          (enumerate-interval 1 board-size)))
-            (newline)
             (map (lambda (new-row)
                    (adjoin-position new-row k rest-of-queens))
                  (enumerate-interval 1 board-size)))
@@ -32,14 +23,7 @@
 ;;; The argument positions is a list of position pairs (row col).
 ;;; Check the first (row col) in the list against previous
 ;;; (row col)-pairs for conflicts.
-;;; TODO: refactor using hof?
 (define (safe? positions)
-  (newline)
-  (display "-> safe")
-  (display "  positions: ")
-  (display positions)
-  (display ": ")
-
   (define (conflicts-with? new-pos)
     (lambda (pos)
       (let ((r1 (pos-row pos))
@@ -54,8 +38,6 @@
 
   (let ((new-p (car positions))
         (old-ps (cdr positions)))
-    (display (not (any? (conflicts-with? new-p) old-ps)))
-    (newline)
     (not (any? (conflicts-with? new-p) old-ps))))
 
 (define (any? predicate sequence)
