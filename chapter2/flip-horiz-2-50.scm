@@ -1,3 +1,11 @@
+(load "transform-painter.scm")
+
+(define (rotate90 painter)
+  (transform-painter painter
+                     (make-vect 1.0 0.0)
+                     (make-vect 1.0 1.0)
+                     (make-vect 0.0 0.0)))
+
 ;;; exercise 2.50
 
 (define (flip-horiz painter)
