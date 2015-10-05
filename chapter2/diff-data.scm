@@ -25,7 +25,9 @@
   (cadr s))
 
 (define (augend s)
-  (caddr s))
+  (if (null? (cdddr s))
+      (caddr s)
+      (cons '+ (cddr s))))
 
 ;;; product
 
@@ -43,7 +45,9 @@
   (cadr p))
 
 (define (multiplicand p)
-  (caddr p))
+  (if (null? (cdddr p))
+      (caddr p)
+      (cons '* (cddr p))))
 
 ;;; exponentiation
 
